@@ -5,6 +5,7 @@
 
 main() {
     FILE *stream;
+    FILE *output_stream;
     char buf[5];
     char *result;
     int fd;
@@ -21,10 +22,18 @@ main() {
     } else {
         result = fgets(buf, 5, stream);
         if (result == EOF) {
-            printf("error");
+            printf("error in reading test file");
         } else {
             printf("buf=%s\n", buf);
             printf("result=%s\n", result);
+            if (fclose(stream) == EOF)
+                printf("error in closing test file");
         }
     }
+    output_stream = fdopen(1, "w");
+    if (fputs("test\n", output_stream) == EOF) 
+        printf("error in writing to standard output");
+
+    if (fclose(output_stream) == EOF) 
+        printf("error in closing standard output");
 }
