@@ -5,7 +5,8 @@
 
 main() {
     FILE *stream;
-    FILE *output_stream;
+    FILE *std_output_stream;
+    FILE *stderr_stream;
     char buf[5];
     char *result;
     int fd;
@@ -30,10 +31,16 @@ main() {
                 printf("error in closing test file");
         }
     }
-    output_stream = fdopen(1, "w");
-    if (fputs("test\n", output_stream) == EOF) 
+    std_output_stream = fdopen(1, "w");
+    if (fputs("standard output test\n", std_output_stream) == EOF) 
         printf("error in writing to standard output");
 
-    if (fclose(output_stream) == EOF) 
+    if (fclose(std_output_stream) == EOF) 
         printf("error in closing standard output");
+    stderr_stream = fdopen(2, "w");
+    if (fputs("standard error test\n", stderr_stream) == EOF) 
+        printf("error in writing to standard err");
+
+    if (fclose(stderr_stream) == EOF) 
+        printf("error in closing standard err");
 }
