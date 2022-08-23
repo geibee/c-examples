@@ -44,7 +44,7 @@ int main()
 
     ret = chdir(swd);
     if (ret) {
-        perror("chidir");
+        perror("chdir");
         free(swd);
         exit(EXIT_FAILURE);
     }
