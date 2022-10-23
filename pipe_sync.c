@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
     // 何か処理を実行して、子プロセスと同期
     // 結局、子プロセスのパイプが全部closeされたら
     // 親プロセスのブロックが解除されることで同期をとってる。
+    // closeの代わりに1バイトだけ送って、状態を取り出して制御したりもできる
     printf("%s Parent ready to go\n", currTime());
     exit(EXIT_SUCCESS);
 }
