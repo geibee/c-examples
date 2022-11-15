@@ -78,6 +78,14 @@ int main(int argc, char *argv[])
             exit(1);
         }
 
+        while(counter == 0) {
+            s = pthread_cond_wait(&cond, &mtx);
+            if (s != 0) {
+                printf("pthread_cond_wait failed :%d", s);
+                exit(1);
+            }
+        }
+
         while (counter > 0) {
             // threadを実行した回数分インクリメント
             printf("record No.%d, is %s, timestamp is %s\n", db_index, db[db_index][0], db[db_index][1]);
