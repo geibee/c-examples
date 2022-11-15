@@ -6,6 +6,8 @@
 #include <time.h>
 
 static pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+
 // 条件変数。ここでは、データベースへの書き込みを想定する。
 static char ***db;
 static int counter = 0;
@@ -36,7 +38,13 @@ producer(void *arg)
     if (s != 0) {
         printf("pthread_mutex_unlock failed :%d", s);
         exit(1);
-    }        
+    }
+
+    s = pthread_cond_signal(&cond);
+    if (s != 0) {
+        printf("pthread_cond_signal failed :%d", s);
+        exit(1);
+    }
     return NULL;
 }
 
